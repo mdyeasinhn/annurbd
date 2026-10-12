@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会社概要 - 政府認定バングラデシュ送出機関An Nur Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: hsl(210 40% 98%);
+            --foreground: hsl(222.2 84% 4.9%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222.2 84% 4.9%);
+            --primary: hsl(221.2 83.2% 53.3%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222.2 47.4% 11.2%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215.4 16.3% 46.9%);
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .card {
+            background-color: var(--card);
+            color: var(--card-foreground);
+        }
+        .text-muted {
+            color: var(--muted-foreground);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4">
+            <div class="flex items-center space-x-2">
+                <div class="h-8 w-8 bg-blue-600 rounded">
+                    <a href="/jp">
+        <img src="img/logo.png" alt="An Nur Group Logo">
+    </a>
+                </div>
+                <span class="font-bold text-xl">An Nur Group</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">ホーム</a>
+                <a href="company.html" class="nav-link text-sm font-medium text-blue-600">会社概要</a>
+                <a href="why-us.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">自動車免許の利点</a>
+                <a href="blog.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">1分 ブログ</a>
+                <a href="newsletter.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">ニュースレター</a>
+                <a href="contact.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">お問い合わせ</a>
+                <a href="candidate-information.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">候補者情報</a>
+            </nav>
+            <button class="md:hidden" id="mobile-menu-btn">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+                <a href="index.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">ホーム</a>
+                <a href="company.html" class="block px-3 py-2 text-base font-medium bg-gray-50">会社概要</a>
+                <a href="why-us.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">自動車免許の利点</a>
+                <a href="blog.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">1分 ブログ</a>
+                <a href="newsletter.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">ニュースレター</a>
+                <a href="contact.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">お問い合わせ</a>
+                <a href="candidate-information.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">候補者情報</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="text-blue-600">会社概要</span>
+            </h1>
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">政府認定バングラデシュ送出機関 <br>アン・ヌール・グループ </h2>
+                <p class="text-xl text-muted mb-4">RL-1148 ・サディアテック株式会社</p>
+                <p class="text-lg text-muted mb-8 max-w-3xl mx-auto">
+                    アンヌルグループは、外国人技能実習機構（OTIT）とバングラデシュ政府から認定を受けた送出機関です。「ジャパンクオリティ」を備えた優秀なバングラデシュ人材を日本企業へ送り出しています。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">私たちのミッション</h2>
+                    <p class="text-xl text-muted">
+                        優秀なバングラデシュ人材を日本品質で送り出し、日本とバングラデシュの架け橋となること
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4">私たちの理念</h3>
+                        <p class="text-muted mb-6">
+                            アンヌルグループは、日本企業のニーズに応える優秀な人材の育成と活用に尽力しています。
+バングラデシュの豊富な人材と日本の高い技術力を融合させ、両国の発展に貢献することが私たちの使命です。
+                        </p>
+                        <p class="text-muted mb-6">
+                            私たちは「ジャパン・クオリティ」を合言葉に、厳選された人材に対して日本語教育、技術訓練、
+                            そして日本の文化・ビジネスマナー教育を実施し、即戦力として活躍できる人材を育成しています。
+                        </p>
+                        <p class="text-muted">
+                            政府認定機関としての責任を持ち、透明性の高い運営と継続的なサポートにより、
+                            お客様に信頼される送出機関であり続けます。
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-white rounded-lg h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold">人材育成第一</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">私たちの価値観</h2>
+                <p class="text-xl text-muted max-w-2xl mx-auto">
+                    アンヌールグループが大切にしている3つの柱
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card p-6 rounded-lg shadow-sm text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">ジャパン・クオリティ</h3>
+                    <p class="text-muted">日本基準の品質管理と訓練により、即戦力として活躍できる人材を育成します。一人ひとりに対して責任を持ち、最高水準の人材送出を実現しています。</p>
+                </div>
+                <div class="card p-6 rounded-lg shadow-sm text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">継続的サポート</h3>
+                    <p class="text-muted">送出前の教育から日本での就労期間中まで、継続的なサポートを提供します。企業様と人材の架け橋として、長期的な成功を支援します。</p>
+                </div>
+                <div class="card p-6 rounded-lg shadow-sm text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">教育重視</h3>
+                    <p class="text-muted">自社日本語学校での「いろどり」テキストによる実践的日本語教育、技能訓練、文化・マナー講習を通じて、総合的な人材育成を行います。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Additional Company Information -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">会社情報</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="card p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">認定情報</h3>
+                        <div class="space-y-3 text-muted">
+                            <p><strong>日本側認定機関：</strong>外国人技能実習機構（OTIT）</p>
+                            <p><strong>認定番号：</strong>RL-1148</p>
+                            <p><strong>サディアテック株式会社：</strong>サディアテック株式会社</p>
+                            <p><strong>設立：</strong>2018年</p>
+                            <p><strong>本社所在地：</strong>ダッカ、バングラデシュ</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">対応業種・職種</h3>
+                        <div class="space-y-3 text-muted">
+                            <p>• 技能実習生</p>
+                            <p>• 特定技能（各分野対応）</p>
+                            <p>• 技術・人文知識・国際業務</p>
+                            <p>• 製造業、建設業、農業、介護等</p>
+                            <p>• IT関連職種</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-8 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold mb-6 text-blue-600 text-center">私たちの強み</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">自社日本語学校</h4>
+                            <p class="text-xs text-muted">いろどりテキスト使用</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-green-600 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">技能訓練校提携</h4>
+                            <p class="text-xs text-muted">大手7社との提携</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-purple-600 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">大量受入対応</h4>
+                            <p class="text-xs text-muted">全国40か所TTC提携</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-red-600 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">日本専用送出</h4>
+                            <p class="text-xs text-muted">迅速対応可能</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="h-8 w-8 bg-blue-600 rounded">
+                            <a href="/jp">
+        <img src="img/logo.png" alt="An Nur Group Logo">
+    </a>
+                        </div>
+                        <span class="font-bold text-xl">An Nur Group</span>
+                    </div>
+                    <p class="text-gray-400">
+                        バングラデシュ人材を「Japan Quality」で送り出す政府認定送出機関
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">サービス</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">技能実習生</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">特定技能</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">技術・人文・国際業務</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">留学</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">会社情報</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="company.html" class="hover:text-white transition-colors">会社概要</a></li>
+                        <li><a href="why-us.html" class="hover:text-white transition-colors">私たちの強み</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">ブログ</a></li>
+                        <li><a href="newsletter.html" class="hover:text-white transition-colors">ニュースレター</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">お問い合わせ</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>RL-1148</li>
+                        <li>サディアテック株式会社</li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">お問い合わせフォーム</a></li>
+                        <li><a href="candidate-information.html" class="hover:text-white transition-colors">スタッフ情報</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-8 border-gray-700">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2025 アン・ヌル・グループ・バングラデシュ 無断転載を禁じます。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

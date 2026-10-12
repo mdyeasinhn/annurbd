@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Resource Portal | An Nur Group</title>
+    <link rel="icon" href="https://annurbd.net/assets/img/logo/logo_2.svg" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .candidate-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+        }
+        .candidate-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(59, 130, 246, 0.15);
+        }
+        .candidate-card.selected-ui {
+            border: 3px solid #12f70a;
+            background-color: #eff6ff;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .side-bar {
+            position: absolute;
+            right: -100%;
+            top: 0;
+            width: 45%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            z-index: 20;
+            border-left: 1px solid rgba(0,0,0,0.05);
+        }
+        .image-container:hover .side-bar {
+            right: 0;
+        }
+        .info-box {
+            @apply px-3 py-1.5 border border-slate-200 rounded-lg text-slate-700 text-[11px] font-bold flex items-center bg-slate-50/50;
+        }
+        .info-tag {
+            @apply px-3 py-1.5 border-2 border-blue-200 rounded-lg text-[11px] font-bold bg-blue-100/80 text-blue-800 shadow-sm;
+        }
+        .id-badge {
+            @apply px-2 py-0.5 border border-slate-300 rounded-md bg-slate-100 text-slate-600 font-bold text-[9px] uppercase inline-flex items-center gap-1;
+        }
+    </style>
+</head>
+<body class="bg-[#fcfdfe] min-h-screen">
+    <nav class="bg-white/90 backdrop-blur-lg border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <div class="container mx-auto flex h-16 items-center justify-between px-4">
+            <div class="flex items-center space-x-2">
+                <div class="h-8 w-8 bg-blue-600 rounded">
+                    <a href="/jp">
+        <img src="img/logo.png" alt="An Nur Group Logo">
+    </a>
+                </div>
+                <span class="font-bold text-xl">An Nur Group</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="nav-link text-sm font-medium text-blue-600">ホーム</a>
+                <a href="candidate.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">こうほ</a>
+                <a href="company.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">会社概要</a>
+                <a href="why-us.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">自動車免許の利点</a>
+                <a href="blog.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">1分 ブログ</a>
+                <a href="newsletter.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">ニュースレター</a>
+                <a href="contact.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">お問い合わせ</a>
+                <a href="candidate-information.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">スタッフ情報</a>
+            </nav>
+            <button class="md:hidden" id="mobile-menu-btn">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+                <a href="index.html" class="block px-3 py-2 text-base font-medium bg-gray-50">ホーム</a>
+                <a href="candidate.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">こうほ</a>
+                <a href="company.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">会社概要</a>
+                <a href="why-us.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">自動車免許の利点</a>
+                <a href="blog.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">1分 ブログ</a>
+                <a href="newsletter.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">ニュースレター</a>
+                <a href="contact.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">お問い合わせ</a>
+                <a href="candidate-information.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">スタッフ情報</a>
+            </div>
+        </div>
+            
+            <!--<div class="flex items-center space-x-2">-->
+                <!--<div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">-->
+                <!--    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="flex items-center space-x-4">
+                <a href="/アンヌール・バングラデシュ送出機関/login.html" class="bg-slate-900 text-white px-5 py-2 rounded-xl font-bold hover:bg-slate-800 transition-all text-sm">
+                    管理者
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="header-gradient text-white py-12 px-6">
+        
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-4">アンヌル,グループ　人材デ-ダ　べ-ス</h1>
+            <div class="mt-8 relative max-w-2xl mx-auto">
+                <input type="text" id="search-input" placeholder="なまえ、こくせき、ぷろぐらむ、またはすきるでけんさく..."
+                    class="w-full px-8 py-4 pl-14 bg-white/15 backdrop-blur-md border border-white/20 rounded-[22px] text-white placeholder:text-blue-100 outline-none focus:ring-4 focus:ring-white/10 transition-all">
+                <svg class="w-6 h-6 text-blue-200 absolute left-5 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 -mt-6 pb-20">
+        <div id="user-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </main>
+
+    <script>
+        let allUsers = [];
+
+        async function loadUsers() {
+            const res = await fetch('https://server.annurbd.net/api/users');
+            allUsers = await res.json();
+            renderUsers(allUsers);
+        }
+
+        function renderUsers(users) {
+            const container = document.getElementById('user-list');
+            
+            
+            const programPriority = {
+                "TITP": 1,
+                 "SSW": 2,
+                  "International": 3
+            };
+
+             const sortedUsers = [...users].sort((a, b) => {
+   
+            if (a.selectionStatus === 'Selected' && b.selectionStatus !== 'Selected') return 1;
+            if (a.selectionStatus !== 'Selected' && b.selectionStatus === 'Selected') return -1;
+
+   
+            const pA = programPriority[a.programType] || 99;
+            const pB = programPriority[b.programType] || 99;
+
+             return pA - pB;
+          });
+
+
+            container.innerHTML = sortedUsers.map(user => `
+                <div class="candidate-card bg-white rounded-[28px] overflow-hidden flex flex-col shadow-sm border border-slate-100 ${user.selectionStatus === 'Selected' ? 'selected-ui' : ''}">
+                    <div class="image-container h-64 relative group cursor-pointer">
+                        <img src="${user.image1Path || '/assets/placeholder.png'}" class="w-full h-full object-contain bg-slate-100">
+                        ${user.image2Path ? `
+                        <div class="side-bar">
+                            <img src="${user.image2Path}" class="w-full h-full object-contain rounded-lg">
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h2 class="text-xl font-bold text-slate-800 leading-tight uppercase">${(user.firstName || '')} ${(user.middleName || '')} ${(user.lastName || '')}</h2>
+                            <div class="mt-2 flex gap-2">
+                                <span class="id-badge">身元: ${user.id}</span>
+                                <span class="id-badge">国籍: ${user.nationality || 'BANGLADESH'}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="info-tag ring-1 ring-blue-100/50">人材形態: ${user.programType || user.visaCategory || 'N/A'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">職種: ${user.jobIndustry || user.skills || 'N/A'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">語学: ${user.languageLevel || 'N/A'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">年齢: ${user.age ? user.age + '歳' : 'N/A'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">性別: ${user.gender === 'Male' ? '男性' : (user.gender === 'Female' ? '女性' : 'N/A')}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">靴: ${user.shoeSize || 'N/A'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">服: ${user.clothesSize || 'N/A'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">選考: ${user.selectionStatus === 'Selected' ? 'あり' : 'なし'}</span>
+                            <span class="info-tag ring-1 ring-blue-100/50">現在 状態: ${user.selectionStatus === 'Selected' ? '会社決めました。' : 'まだ決めてない'}</span>
+                        </div>
+                        
+                        <div class="space-y-2 mb-6 text-[11px] font-bold text-slate-500">
+                            <div class="flex flex-col space-y-1">
+                                <span>宗教: ${user.religion || 'N/A'} | 婚姻: ${user.maritalStatus === 'Married' ? '既婚' : '未婚'}</span>
+                                <span>居住地: ${user.presentLocation || 'N/A'}</span>
+                                <span>パンツ: ${user.pantSize || 'N/A'} | 以前の申請: ${user.appliedBefore === 'Yes' ? 'あり' : 'なし'}</span>
+                            </div>
+                            ${user.rejectionYear ? `<div class="text-red-500 font-bold">却下年: ${user.rejectionYear}</div>` : ''}
+                            ${user.rejectionReason ? `
+                                <div class="group/reason relative inline-block cursor-help">
+                                    <div class="text-red-400 text-[10px] italic">理由: あり (マウスをホバー)</div>
+                                    <div class="absolute bottom-full left-0 mb-2 w-48 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/reason:opacity-100 transition-opacity z-50 pointer-events-none">
+                                        理由: ${user.rejectionReason}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 mt-auto">
+                            ${user.videoPath ? `
+                                <a href="${user.videoPath}" target="_blank" class="flex items-center justify-center space-x-2 py-3 bg-slate-900 text-white rounded-xl font-bold text-xs hover:bg-slate-800 transition-all shadow-md">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path></svg>
+                                    <span>動画を見る</span>
+                                </a>
+                            ` : ''}
+                            ${user.cvPath ? `
+                                <a href="${user.cvPath}" download class="flex items-center justify-center space-x-2 py-3 bg-blue-600 text-white rounded-xl font-bold text-xs hover:bg-blue-700 transition-all shadow-md shadow-blue-100">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                    <span>履歴書をダウンロード</span>
+                                </a>
+                            ` : ''}
+                        </div>
+                        
+                        ${(user.certPath || user.markPath || user.passportPath) ? `
+                        <div class="grid grid-cols-1 gap-2 mt-3">
+                            ${user.certPath ? `
+                                <a href="${user.certPath}" download class="flex items-center justify-center space-x-2 py-2 border-2 border-slate-100 text-slate-600 rounded-xl font-bold text-[10px] hover:bg-slate-50 transition-all">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    <span>教育証明書 (Certificate)</span>
+                                </a>
+                            ` : ''}
+                            ${user.markPath ? `
+                                <a href="${user.markPath}" download class="flex items-center justify-center space-x-2 py-2 border-2 border-slate-100 text-slate-600 rounded-xl font-bold text-[10px] hover:bg-slate-50 transition-all">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m0 10H4.6a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v11m-3 3h4.5a2.5 2.5 0 002.5-2.5V13.5a2.5 2.5 0 00-2.5-2.5H16.5"></path></svg>
+                                    <span>成績表 (Mark Sheet)</span>
+                                </a>
+                            ` : ''}
+                            ${user.passportPath ? `
+                                <a href="${user.passportPath}" download class="flex items-center justify-center space-x-2 py-2 border-2 border-slate-100 text-slate-600 rounded-xl font-bold text-[10px] hover:bg-slate-50 transition-all">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                    <span>パスポート (Passport)</span>
+                                </a>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+                        
+                        
+                         <div class="grid grid-cols-2 gap-2 mt-3">
+                         ${user.image1Path ? `
+                          <a href="${user.image1Path}" download
+                           class="flex items-center justify-center py-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 hover:bg-slate-50">
+                           運転免許証
+                             </a> ` : ''}
+
+                         ${user.image2Path ? `
+                         <a href="${user.image2Path}" download
+                          class="flex items-center justify-center py-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 hover:bg-slate-50">
+                             全身写真
+                              </a>  ` : ''}
+                             </div>
+
+
+                        
+                        <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between text-[10px] text-slate-400 font-bold">
+                            <span class="flex items-center">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                ${user.date}
+                            </span>
+                            <span class="text-blue-500 uppercase tracking-tighter">確認済み候補者</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allUsers.filter(u => 
+                (u.firstName + ' ' + (u.middleName || '') + ' ' + u.lastName).toLowerCase().includes(term) ||
+                (u.visaCategory || '').toLowerCase().includes(term) ||
+                (u.programType || '').toLowerCase().includes(term) ||
+                (u.skills || u.jobIndustry || '').toLowerCase().includes(term) || 
+                (u.id || '').toString().includes(term)
+            );
+            renderUsers(filtered);
+        });
+
+        loadUsers();
+    </script>
+</body>
+</html>

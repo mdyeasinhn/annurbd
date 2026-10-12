@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブログ - An Nur Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: hsl(210 40% 98%);
+            --foreground: hsl(222.2 84% 4.9%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222.2 84% 4.9%);
+            --primary: hsl(221.2 83.2% 53.3%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222.2 47.4% 11.2%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215.4 16.3% 46.9%);
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .card {
+            background-color: var(--card);
+            color: var(--card-foreground);
+        }
+        .text-muted {
+            color: var(--muted-foreground);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4">
+            <div class="flex items-center space-x-2">
+                <div class="h-8 w-8 bg-blue-600 rounded">
+                    <a href="/jp">
+        <img src="img/logo.png" alt="An Nur Group Logo">
+    </a>
+                </div>
+                <span class="font-bold text-xl">An Nur Group </span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">ホーム</a>
+                <a href="company.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">会社概要</a>
+                <a href="why-us.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">自動車免許の利点</a>
+                <a href="blog.html" class="nav-link text-sm font-medium text-blue-600 bg-blue-50 px-3 py-2 rounded-md">1分 ブログ</a>
+                <a href="newsletter.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">ニュースレター</a>
+                <a href="contact.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">お問い合わせ</a>
+                <a href="candidate-information.html" class="nav-link text-sm font-medium hover:text-blue-600 transition-colors">候補者情報</a>
+            </nav>
+            <button class="md:hidden" id="mobile-menu-btn">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+                <a href="index.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">ホーム</a>
+                <a href="company.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">会社概要</a>
+                <a href="why-us.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">自動車免許の利点</a>
+                <a href="blog.html" class="block px-3 py-2 text-base font-medium bg-blue-50">1分 ブログ</a>
+                <a href="newsletter.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">ニュースレター</a>
+                <a href="contact.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">お問い合わせ</a>
+                <a href="candidate-information.html" class="block px-3 py-2 text-base font-medium hover:bg-gray-50">候補者情報</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                1分 <span class="text-blue-600">ブログ</span>
+            </h1>
+            <p class="text-xl text-muted mb-8 max-w-2xl mx-auto">
+                最新の業界動向、インサイト、ニュースで常に最新情報をお届けします。
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="blog-posts-grid">
+                <!-- Blog posts will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-blue-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">最新情報をお届け</h2>
+            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                最新の情報やインサイトをお届けするニュースレターにご登録ください
+            </p>
+            <form class="max-w-md mx-auto flex gap-4" id="newsletter-form">
+                <input 
+                    type="email" 
+                    placeholder="メールアドレスを入力" 
+                    class="flex-1 px-4 py-3 rounded-lg text-gray-900"
+                    required
+                >
+                <button type="submit" class="px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    登録
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="h-8 w-8 bg-blue-600 rounded">
+                            <a href="/jp">
+        <img src="img/logo.png" alt="An Nur Group Logo">
+    </a>
+                        </div>
+                        <span class="font-bold text-xl">An Nur Group</span>
+                    </div>
+                    <p class="text-gray-400">
+                        明日の課題に対する革新的なソリューションを構築しています。
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">サービス</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">ウェブ開発</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">モバイルアプリ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">コンサルティング</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">サポート</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">会社情報</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="company.html" class="hover:text-white transition-colors">会社概要</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">採用情報</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">利用規約</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">お問い合わせ</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>5-chōme-16-7 Nishinippori, Arakawa City, Tokyo </li>
+                        <li>116-0013, Japan </li>
+                        <li>Phone:- +81 70-1641-8452 (Whatsapp) </li>
+                        <li>Preferred Knock Time (3pm-6pm) BD Timezone</li>
+                        <li>Email:- annurjlanguage101@gmail.com </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-8 border-gray-700">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2025 An Nur Group All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>

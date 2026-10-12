@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Candidate | An Nur Groups</title>
+    <link rel="icon" href="https://annurbd.net/assets/img/logo/logo_2.svg" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .bg-mesh {
+            background-color: #f8fafc;
+            background-image: radial-gradient(at 0% 0%, hsla(210,100%,96%,1) 0, transparent 50%), 
+                              radial-gradient(at 100% 0%, hsla(230,100%,94%,1) 0, transparent 50%);
+        }
+        .form-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .drop-zone {
+            @apply border-2 border-dashed border-slate-200 rounded-[24px] p-6 text-center transition-all bg-white/30 cursor-pointer relative overflow-hidden;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            @apply border-blue-400 bg-blue-50/30;
+        }
+        label { position: relative; z-index: 20; }
+    </style>
+</head>
+<body class="bg-mesh min-h-screen pb-20">
+    <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+        <a href="https://annurbd.net/%E3%82%A2%E3%83%B3%E3%83%8C%E3%83%BC%E3%83%AB%E3%83%BB%E3%83%90%E3%83%B3%E3%82%B0%E3%83%A9%E3%83%87%E3%82%B7%E3%83%A5%E9%80%81%E5%87%BA%E6%A9%9F%E9%96%A2/candidate.html" class="flex items-center space-x-2 group">
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-all">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </div>
+            <span class="font-bold text-slate-600">Back to Dashboard</span>
+        </a>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6">
+        <div class="form-card p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-2xl shadow-blue-100/50 mb-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Find & Edit Candidate</h2>
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="text" id="searchInput" placeholder="Search by ID or Name..." class="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                <button onclick="findCandidate()" class="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all">Find User</button>
+                <!-- <button onclick="resetForm()" class="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all">Add New User</button> -->
+            </div>
+            <div id="search-result" class="mt-4 text-sm font-medium"></div>
+        </div>
+
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight" id="form-title">Post New Candidate</h1>
+            <p class="text-slate-500 mt-2 font-medium tracking-wide">Max file size: 50MB per file</p>
+        </div>
+
+        <form action="https://server.annurbd.net/api/upload" id="candidateForm" method="POST" enctype="multipart/form-data" onsubmit="return validateFiles()" class="form-card p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-2xl shadow-blue-100/50 space-y-8">
+            <input type="hidden" name="id" id="candidateId">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">First Name</label>
+                    <input type="text" name="firstName" placeholder="Dipto" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Middle Name</label>
+                    <input type="text" name="middleName" placeholder="" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Last Name</label>
+                    <input type="text" name="lastName" placeholder="Karmokar" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Date of Birth</label>
+                    <input type="date" name="dob" id="dob" onchange="calculateAge(this.value)" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Current Age</label>
+                    <input type="text" id="ageDisplay" readonly placeholder="Calculated Age" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none font-bold text-slate-600 relative z-30">
+                    <input type="hidden" name="age" id="ageHidden">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Gender</label>
+                    <select name="gender" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Religion</label>
+                    <select name="religion" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="Muslim">Muslim</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Christian">Christian</option>
+                        <option value="Buddhist">Buddhist</option>
+                        <option value="Atheist">Atheist</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Marital Status</label>
+                    <select name="maritalStatus" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="Unmarried">Unmarried</option>
+                        <option value="Married">Married</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Primary Photo (Passport Size: 45x35 mm)</label>
+                    <div class="drop-zone h-48 relative" id="dz-image1">
+                        <input type="file" name="image1" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="preview hidden absolute inset-0 bg-white z-0">
+                            <img src="" class="w-full h-full object-contain">
+                        </div>
+                        <div class="content relative z-0">
+                            <svg class="w-10 h-10 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <p class="text-slate-500 text-sm font-medium">Drag or Click Photo 1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Side Profile (6x4 inch)</label>
+                    <div class="drop-zone h-48 relative" id="dz-image2">
+                        <input type="file" name="image2" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="preview hidden absolute inset-0 bg-white z-0">
+                            <img src="" class="w-full h-full object-contain">
+                        </div>
+                        <div class="content relative z-0">
+                            <svg class="w-10 h-10 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <p class="text-slate-500 text-sm font-medium">Drag or Click Photo 2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-3">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Selection Status</label>
+                    <div class="flex space-x-4">
+                        <label class="selection-status-label flex-1 flex items-center justify-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-white transition-all relative z-30" id="label-none">
+                            <input type="radio" name="selectionStatus" value="None Selected" checked onchange="updateSelectionUI(this)" class="w-4 h-4 text-blue-600 mr-3">
+                            <span class="font-bold text-slate-700">None Selected</span>
+                        </label>
+                        <label class="selection-status-label flex-1 flex items-center justify-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-white transition-all relative z-30" id="label-selected">
+                            <input type="radio" name="selectionStatus" value="Selected" onchange="updateSelectionUI(this)" class="w-4 h-4 text-blue-600 mr-3">
+                            <span class="font-bold text-slate-700">Selected</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Visa Category</label>
+                    <select name="visaCategory" id="visaCategory" onchange="toggleVisaSubFields(this.value)" class="w-full px-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none appearance-none font-bold text-slate-700 relative z-30">
+                        <option value="しごと" selected>Job Visa</option>
+                        <option value="がくせい">Student Visa</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="job-visa-fields" class="space-y-6 pt-6 border-t border-slate-100 animate-in fade-in slide-in-from-top-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-700 ml-1">Program Type</label>
+                        <select name="programType" onchange="handleProgramType(this.value)" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                            <option value="TITP">Technical Intern Training Program (TITP)</option>
+                            <option value="SSW">Specified Skilled Worker Program (SSW)</option>
+                            <option value="International">International Service</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-700 ml-1">Job Category</label>
+                        <select name="jobIndustry" id="jobIndustry" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                            <option value="Agriculture Crop Farming">Agriculture Crop Farming</option>
+                            <option value="Agriculture Livestock Farming">Agriculture Livestock Farming</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Caregiver">Caregiver</option>
+                            <option value="Truck Driving">Truck Driving</option>
+                            <option value="Automobile">Automobile</option>
+                            <option value="Restaurant">Restaurant</option>
+                            <option value="Building Cleaning">Building Cleaning</option>
+                            <option value="Food Processing">Food Processing</option>
+                            <option value="none">N/A</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Height (cm)</label>
+                    <input type="number" name="height" placeholder="170" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Weight (kg)</label>
+                    <input type="number" name="weight" placeholder="65" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Eye Power</label>
+                    <input type="text" name="eyePower" placeholder="1.0 / 1.0" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Blood Group</label>
+                    <select name="bloodGroup" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="">Select</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Nationality</label>
+                    <select name="nationality" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="China">China</option>
+                        <option value="Srilanka">Srilanka</option>
+                        <option value="Japan">Japan</option>
+                        <option value="India">India</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Philippine">Philippine</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Laos">Laos</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Present Location</label>
+                    <select name="presentLocation" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="China">China</option>
+                        <option value="Srilanka">Srilanka</option>
+                        <option value="Japan">Japan</option>
+                        <option value="India">India</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Philippine">Philippine</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Laos">Laos</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Language Level</label>
+                    <select name="languageLevel" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="JLPT N5">JLPT N5</option>
+                        <option value="JLPT N4">JLPT N4</option>
+                        <option value="JLPT N3">JLPT N3</option>
+                        <option value="JLPT N2">JLPT N2</option>
+                        <option value="JLPT N1">JLPT N1</option>
+                        <option value="JFT A1">JFT A1</option>
+                        <option value="JFT A2">JFT A2</option>
+                        <option value="JFT B1">JFT B1</option>
+                        <option value="JFT B2">JFT B2</option>
+                        <option value="JFT C1">JFT C1</option>
+                        <option value="JFT C2">JFT C2</option>
+                        <option value="NAT TEST N5">NAT TEST N5</option>
+                        <option value="NAT TEST N4">NAT TEST N4</option>
+                        <option value="NAT TEST N3">NAT TEST N3</option>
+                        <option value="NAT TEST N2">NAT TEST N2</option>
+                        <option value="NAT TEST N1">NAT TEST N1</option>
+                        <option value="None">N/A</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Skills</label>
+                    <select name="skills" id="skills" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 relative z-30">
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Agriculture Crop Farming">Agriculture Crop Farming</option>
+                        <option value="Agriculture Livestock Farming">Agriculture Livestock Farming</option>
+                        <option value="Construction">Construction</option>
+                        <option value="Caregiver">Caregiver</option>
+                        <option value="Truck Driving">Truck Driving</option>
+                        <option value="Automobile">Automobile</option>
+                        <option value="Restaurant">Restaurant</option>
+                        <option value="Building Cleaning">Building Cleaning</option>
+                        <option value="Food Processing">Food Processing</option>
+                        <option value="none">N/A</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Shoe Size (JP)</label>
+                    <input type="text" name="shoeSize" placeholder="26.0" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Clothes Size</label>
+                    <input type="text" name="clothesSize" placeholder="M" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Pant Size</label>
+                    <input type="text" name="pantSize" placeholder="32" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                </div>
+                <div class="space-y-3">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Applied Before to Japan?</label>
+                    <div class="flex space-x-4">
+                        <label class="flex-1 flex items-center justify-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-white transition-all relative z-30">
+                            <input type="radio" name="appliedBefore" value="Yes" onchange="toggleRejectField(true)" class="w-4 h-4 text-blue-600 mr-3">
+                            <span class="font-bold text-slate-700">Yes</span>
+                        </label>
+                        <label class="flex-1 flex items-center justify-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-white transition-all relative z-30">
+                            <input type="radio" name="appliedBefore" value="No" checked onchange="toggleRejectField(false)" class="w-4 h-4 text-blue-600 mr-3">
+                            <span class="font-bold text-slate-700">No</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="reject-field" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden animate-in fade-in slide-in-from-top-2">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-700 ml-1">Rejection Year</label>
+                        <input type="date" name="rejectionYear" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-700 ml-1">Why Rejected? (Reason)</label>
+                        <textarea name="rejectionReason" placeholder="Enter reason for rejection..." rows="1" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all relative z-30"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Education certificate and Transcript (PDF)</label>
+                    <div class="drop-zone h-32 relative" id="dz-cert">
+                        <input type="file" name="certFile" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="content relative z-0">
+                            <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <p class="text-slate-500 text-xs font-medium">Upload Certificate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Japanese languagae certificate (PDF)</label>
+                    <div class="drop-zone h-32 relative" id="dz-mark">
+                        <input type="file" name="markFile" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="content relative z-0">
+                            <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m0 10H4.6a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v11m-3 3h4.5a2.5 2.5 0 002.5-2.5V13.5a2.5 2.5 0 00-2.5-2.5H16.5"></path></svg>
+                            <p class="text-slate-500 text-xs font-medium">Upload Mark Sheet</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Passport (PDF)</label>
+                    <div class="drop-zone h-32 relative" id="dz-passport">
+                        <input type="file" name="passportFile" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="content relative z-0">
+                            <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                            <p class="text-slate-500 text-xs font-medium">Upload Passport</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Video CV (MP4)</label>
+                    <div class="drop-zone h-32 relative" id="dz-video">
+                        <input type="file" name="videoCv" accept="video/mp4" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="content relative z-0">
+                            <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <p class="text-slate-500 text-xs font-medium">Drag Video CV</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Resume (PDF/Word)</label>
+                    <div class="drop-zone h-32 relative" id="dz-cv">
+                        <input type="file" name="cvFile" accept=".pdf,.doc,.docx" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="checkSize(this)">
+                        <div class="content relative z-0">
+                            <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            <p class="text-slate-500 text-xs font-medium">Drag Resume</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full py-5 bg-blue-600 hover:bg-blue-700 text-white rounded-[24px] font-extrabold text-lg shadow-xl shadow-blue-200 transition-all active:scale-[0.98] relative z-30">
+                Publish Candidate Profile
+            </button>
+        </form>
+    </main>
+
+    <script>
+        function updateSelectionUI(radio) {
+            document.querySelectorAll('.selection-status-label').forEach(l => {
+                l.classList.remove('border-blue-500', 'bg-blue-50');
+            });
+            if (radio.checked) {
+                const label = radio.closest('label');
+                label.classList.add('border-blue-500', 'bg-blue-50');
+            }
+        }
+
+        function toggleVisaSubFields(value) {
+            const fields = document.getElementById('job-visa-fields');
+            fields.classList.toggle('hidden', value !== 'しごと');
+        }
+
+        function calculateAge(dob) {
+            if (!dob) return;
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            document.getElementById('ageDisplay').value = age + " Year";
+            document.getElementById('ageHidden').value = age;
+        }
+
+        async function findCandidate() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultDiv = document.getElementById('search-result');
+            if (!query) return;
+
+            try {
+                const res = await fetch('https://server.annurbd.net/api/users');
+                const users = await res.json();
+                const user = users.find(u => 
+                    u.id.toString() === query || 
+                    `${u.firstName} ${u.lastName}`.toLowerCase().includes(query)
+                );
+
+                if (user) {
+                    resultDiv.className = "mt-4 flex items-center justify-between text-sm font-medium p-3 bg-green-50 rounded-xl border border-green-100";
+                    resultDiv.innerHTML = `
+                        <span class="text-green-700">Found: ${user.firstName} ${user.lastName}</span>
+                        <button onclick="deleteCandidate('${user.id}')" class="px-3 py-1 bg-red-100 text-red-600 hover:bg-red-200 rounded-lg transition-all font-bold">
+                            Delete User
+                        </button>
+                    `;
+                    fillForm(user);
+                } else {
+                    resultDiv.className = "mt-4 text-sm font-medium text-red-600";
+                    resultDiv.textContent = "Candidate not found.";
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function deleteCandidate(id) {
+            if (!confirm("Are you sure you want to delete this user?")) return;
+
+            try {
+                const res = await fetch(`https://server.annurbd.net/api/users/${id}`, {
+                    method: 'DELETE'
+                });
+                if (res.ok) {
+                    alert("User deleted successfully!");
+                    resetForm();
+                } else {
+                    alert("Failed to delete user.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error deleting user.");
+            }
+        }
+
+        function fillForm(user) {
+            document.getElementById('form-title').textContent = "Edit Candidate Profile";
+            document.getElementById('candidateId').value = user.id;
+            const form = document.getElementById('candidateForm');
+
+            // Text inputs
+            form.firstName.value = user.firstName || '';
+            form.middleName.value = user.middleName || '';
+            form.lastName.value = user.lastName || '';
+            form.shoeSize.value = user.shoeSize || '';
+            form.clothesSize.value = user.clothesSize || '';
+            form.pantSize.value = user.pantSize || '';
+
+            // Radios & Selects
+            if (user.dob) {
+                form.dob.value = user.dob;
+                calculateAge(user.dob);
+            }
+            if (user.gender) form.gender.value = user.gender;
+            if (user.religion) form.religion.value = user.religion;
+            if (user.maritalStatus) form.maritalStatus.value = user.maritalStatus;
+
+            if (user.appliedBefore) {
+                form.appliedBefore.value = user.appliedBefore;
+                toggleRejectField(user.appliedBefore === 'Yes');
+                if (user.rejectionYear) form.rejectionYear.value = user.rejectionYear;
+                if (user.rejectionReason) form.rejectionReason.value = user.rejectionReason;
+            }
+
+            if (user.selectionStatus) {
+                form.selectionStatus.value = user.selectionStatus;
+                const activeRadio = Array.from(form.selectionStatus).find(r => r.value === user.selectionStatus);
+                if (activeRadio) updateSelectionUI(activeRadio);
+            }
+
+            if (user.visaCategory) {
+                form.visaCategory.value = user.visaCategory;
+                toggleVisaSubFields(user.visaCategory);
+                if (user.programType) form.programType.value = user.programType;
+                if (user.jobIndustry) form.jobIndustry.value = user.jobIndustry;
+            }
+
+            // Preview Images if exist
+            if (user.image1Path) {
+                const dz = document.getElementById('dz-image1');
+                dz.querySelector('.preview').classList.remove('hidden');
+                dz.querySelector('.preview img').src = user.image1Path;
+                dz.querySelector('.content').classList.add('hidden');
+            }
+            if (user.image2Path) {
+                const dz = document.getElementById('dz-image2');
+                dz.querySelector('.preview').classList.remove('hidden');
+                dz.querySelector('.preview img').src = user.image2Path;
+                dz.querySelector('.content').classList.add('hidden');
+            }
+
+            window.scrollTo({ top: document.getElementById('candidateForm').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        function resetForm() {
+            document.getElementById('form-title').textContent = "Post New Candidate";
+            document.getElementById('candidateId').value = "";
+            document.getElementById('candidateForm').reset();
+            document.getElementById('search-result').textContent = "";
+
+            // Hide previews
+            document.querySelectorAll('.preview').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('hidden'));
+
+            // Reset UI states
+            updateSelectionUI(document.querySelector('input[name="selectionStatus"][value="None Selected"]'));
+            toggleVisaSubFields('しごと');
+            toggleRejectField(false);
+
+            window.scrollTo({ top: document.getElementById('candidateForm').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        function toggleRejectField(show) {
+            const field = document.getElementById('reject-field');
+            field.classList.toggle('hidden', !show);
+        }
+
+        function checkSize(input) {
+            if (input.files && input.files[0]) {
+                const size = input.files[0].size / 1024 / 1024; // MB
+                if (size > 50) {
+                    alert('File too large! Maximum 50MB allowed.');
+                    input.value = '';
+                    const zone = input.closest('.drop-zone');
+                    const p = zone.querySelector('p');
+                    if (p) p.textContent = zone.id.includes('image') ? 'Drag or Click Photo' : 'Drag Media';
+                    const preview = zone.querySelector('.preview');
+                    if (preview) preview.classList.add('hidden');
+                    const content = zone.querySelector('.content');
+                    if (content) content.classList.remove('hidden');
+                }
+            }
+        }
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            const input = zone.querySelector('input');
+            const preview = zone.querySelector('.preview');
+            const content = zone.querySelector('.content');
+
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', () => {
+                zone.classList.remove('dragover');
+            });
+
+            input.addEventListener('change', () => {
+                const file = input.files[0];
+                if (file && file.size / 1024 / 1024 <= 50) {
+                    const fileNameElement = zone.querySelector('p');
+                    if (fileNameElement) fileNameElement.textContent = file.name;
+
+                    if (file.type.startsWith('image/') && preview) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            preview.querySelector('img').src = e.target.result;
+                            preview.classList.remove('hidden');
+                            if (content) content.classList.add('hidden');
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+        });
+        
+        const defaultJobs = [
+            "Agriculture",
+  "Agriculture Crop Farming",
+  "Agriculture Livestock Farming",
+  "Construction",
+  "Caregiver",
+  "Truck Driving",
+  "Automobile",
+  "Restaurant",
+  "Building Cleaning",
+  "Food Processing",
+  "None"
+];
+
+const internationalJobs = [
+  "Restaurant Foreign Customer Support",
+  "Restaurant Reservation Officer (International)",
+  "Foreign Guest Coordinator (Restaurant)",
+  "International Restaurant Marketing",
+  "Restaurant SNS / Digital Marketing Manager",
+  "International Food Brand Coordinator",
+  "Overseas Restaurant Franchise Support",
+  "International Restaurant Sales Support",
+  "Restaurant Import–Export Coordinator",
+  "International Menu Localization Staff",
+  "Restaurant International PR Officer",
+  "Multilingual Restaurant Call Center Staff",
+  "International Catering Coordinator",
+  "Global Restaurant Operations Coordinator",
+  "International Food Business Planner",
+  "Foreign Vendor Management (Food Industry)",
+  "International Quality Control (Food – Office based)",
+  "International Restaurant Training Coordinator",
+  "Overseas Food Supply Chain Assistant",
+  "International Restaurant HR (Foreign Staff)",
+  "Hotel Front Desk (Foreign Guest Handling)",
+  "Hotel Reservation Officer",
+  "Hotel Guest Coordinator (International)",
+  "Hotel Marketing / SNS Manager",
+  "Hotel HR (Foreign Staff)",
+  "Hotel Operations Coordinator",
+  "Hotel International PR Officer",
+  "Hotel Event Coordinator",
+  "Hotel Bed Making Staff (SSW / Part-time)",
+  "Restaurant Hall Staff",
+  "Kitchen Helper",
+  "Cook / Assistant Cook",
+  "Dishwasher",
+  "Fast Food Staff",
+  "Construction Overseas Sales",
+  "International Construction Project Coordinator",
+  "Construction Import–Export Officer",
+  "Overseas Procurement (Construction Materials)",
+  "International Construction Business Development",
+  "Construction Foreign Client Coordinator",
+  "Tourism & Travel Service",
+  "Airline Ground Staff",
+  "Convention / Exhibition International Staff",
+  "International Event Coordinator",
+  "International Construction Contract Assistant",
+  "Construction Documentation Officer (Office-based)",
+  "International Quality Control (Construction – Office)",
+  "Overseas Construction Supply Chain Assistant",
+  "International Construction HR (Foreign Workers)",
+  "Construction Interpreter / Translator",
+  "International Construction Safety Coordinator (Office)",
+  "Global Construction Operations Assistant",
+  "Overseas Tender / Bidding Support Staff",
+  "Marketing (International)",
+  "Market Research (Overseas)",
+  "Public Relations (PR)",
+  "Global Brand Coordinator",
+  "International Social Media Manager",
+  "International Media Coordinator",
+  "International Tourism Promotion Officer",
+  "International Medical Coordinator (Non-clinical)",
+  "Multilingual Technical Support (Non-Engineer)",
+  "Overseas Government Liaison (Private Sector)"
+];
+
+function handleProgramType(value) {
+  const jobSelect = document.getElementById("jobIndustry");
+  const skillsSelect = document.getElementById("skills");
+   jobSelect.innerHTML = "";
+
+  const list = value === "International" ? internationalJobs : defaultJobs;
+
+  list.forEach(job => {
+    const option = document.createElement("option");
+    option.value = job;
+    option.textContent = job;
+    jobSelect.appendChild(option);
+  });
+  
+           if (skillsSelect) {
+                skillsSelect.innerHTML = '';
+                list.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    option.textContent = cat;
+                    skillsSelect.appendChild(option);
+                });
+            }
+}
+
+
+
+    </script>
+</body>
+</html>

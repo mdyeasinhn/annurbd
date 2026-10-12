@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /*?r=
+Disallow: /*?utm_
+Disallow: /*?ref=
+Disallow: /*?source=
+Disallow: /*?session=
+Disallow: /*?5th%20Floor,%20House156,%20Road22,%20Mohakhali%20DOHS,Dhaka-1212
+
+Sitemap: https://annurbd.net/sitemap.xml
